@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Departments - University of Sindh</title>
+    <link rel="icon" type="image/png" href="https://usindh.edu.pk/wp-content/uploads/2021/04/usindh-logo-1.png">
+    <link rel="apple-touch-icon" href="https://usindh.edu.pk/wp-content/uploads/2021/04/usindh-logo-1.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/3135/3135715.png">
+
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+</head>
+<body class="bg-gray-50 text-gray-800 flex flex-col min-h-screen">
+
+    <nav class="bg-white shadow-md sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center justify-between h-16">
+            <div class="flex items-center flex-shrink-0">
+                <img class="h-10" src="Assets/logo_usindh.jpeg" alt="University of Sindh Logo">
+                <span class="ml-3 font-bold text-gray-700">CPN Calculator By Muhammad Kaif</span>
+            </div>
+            <div class="hidden md:block">
+                <div class="flex items-baseline space-x-4">
+                    <a href="index.html" class="text-gray-500 hover:bg-gray-100 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">Home</a>
+                    <a href="departments.html" class="text-gray-500 hover:bg-gray-100 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">Departments</a>
+                    <a href="faq.html" class="text-gray-500 hover:bg-gray-100 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">FAQs</a>
+                    <a href="about.html" class="text-gray-500 hover:bg-gray-100 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">About</a>
+                    <a href="contact.html" class="text-gray-500 hover:bg-gray-100 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">Contact</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+
+
+    <main class="py-16 flex-grow">
+        <div class="w-full max-w-5xl mx-auto p-4">
+            <div class="bg-white rounded-2xl shadow-lg p-6 md:p-10">
+                <div class="text-center mb-10">
+                    <h1 class="text-3xl md:text-4xl font-bold text-blue-900">Faculties & Departments</h1>
+                    <p class="text-gray-500 mt-2">Explore the diverse academic programs offered at the University of Sindh.</p>
+                </div>
+
+                <div class="space-y-4" x-data="{ openFaculty: 'eng-tech' }">
+
+                    <div class="border rounded-lg">
+                        <button @click="openFaculty = openFaculty === 'eng-tech' ? '' : 'eng-tech'" class="w-full flex justify-between items-center p-4 bg-gray-50 hover:bg-gray-100 focus:outline-none">
+                            <span class="text-lg font-semibold text-gray-700">Faculty of Engineering & Technology</span>
+                            <svg class="w-6 h-6 transform transition-transform" :class="{'rotate-180': openFaculty === 'eng-tech'}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <div x-show="openFaculty === 'eng-tech'" x-collapse class="p-4 border-t">
+                             <ul class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 list-disc list-inside text-gray-600">
+                                <li>Information Technology</li>
+                                <li>Software Engineering</li>
+                                <li>Electronics</li>
+                                <li>Telecommunication</li>
+                                <li>Data Science</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="border rounded-lg">
+                        <button @click="openFaculty = openFaculty === 'natural-sciences' ? '' : 'natural-sciences'" class="w-full flex justify-between items-center p-4 bg-gray-50 hover:bg-gray-100 focus:outline-none">
+                            <span class="text-lg font-semibold text-gray-700">Faculty of Natural Sciences</span>
+                            <svg class="w-6 h-6 transform transition-transform" :class="{'rotate-180': openFaculty === 'natural-sciences'}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <div x-show="openFaculty === 'natural-sciences'" x-collapse class="p-4 border-t">
+                            <ul class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 list-disc list-inside text-gray-600">
+                                <li>Biotechnology</li>
+                                <li>Botany</li>
+                                <li>Chemistry</li>
+                                <li>Computer Science</li>
+                                <li>Geography</li>
+                                <li>Geology</li>
+                                <li>Mathematics & Statistics</li>
+                                <li>Microbiology</li>
+                                <li>Physics</li>
+                                <li>Physiology</li>
+                                <li>Zoology</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="border rounded-lg">
+                        <button @click="openFaculty = openFaculty === 'social-sciences' ? '' : 'social-sciences'" class="w-full flex justify-between items-center p-4 bg-gray-50 hover:bg-gray-100 focus:outline-none">
+                            <span class="text-lg font-semibold text-gray-700">Faculty of Social Sciences</span>
+                            <svg class="w-6 h-6 transform transition-transform" :class="{'rotate-180': openFaculty === 'social-sciences'}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <div x-show="openFaculty === 'social-sciences'" x-collapse class="p-4 border-t">
+                             <ul class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 list-disc list-inside text-gray-600">
+                                <li>Anthropology & Archaeology</li>
+                                <li>Criminology</li>
+                                <li>Economics</li>
+                                <li>Gender Studies</li>
+                                <li>International Relations</li>
+                                <li>Library & Information Science</li>
+                                <li>Media & Communication Studies</li>
+                                <li>Pakistan Studies</li>
+                                <li>Political Science</li>
+                                <li>Psychology</li>
+                                <li>Public Administration</li>
+                                <li>Social Work</li>
+                                <li>Sociology</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="border rounded-lg">
+                        <button @click="openFaculty = openFaculty === 'arts' ? '' : 'arts'" class="w-full flex justify-between items-center p-4 bg-gray-50 hover:bg-gray-100 focus:outline-none">
+                            <span class="text-lg font-semibold text-gray-700">Faculty of Arts</span>
+                            <svg class="w-6 h-6 transform transition-transform" :class="{'rotate-180': openFaculty === 'arts'}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <div x-show="openFaculty === 'arts'" x-collapse class="p-4 border-t">
+                            <ul class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 list-disc list-inside text-gray-600">
+                                <li>Arts & Design</li>
+                                <li>Comparative Religion & Islamic Culture</li>
+                                <li>English Language & Literature</li>
+                                <li>History</li>
+                                <li>Philosophy</li>
+                                <li>Sindhi</li>
+                                <li>Urdu</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="border rounded-lg">
+                        <button @click="openFaculty = openFaculty === 'commerce' ? '' : 'commerce'" class="w-full flex justify-between items-center p-4 bg-gray-50 hover:bg-gray-100 focus:outline-none">
+                            <span class="text-lg font-semibold text-gray-700">Faculty of Commerce & Business Administration</span>
+                            <svg class="w-6 h-6 transform transition-transform" :class="{'rotate-180': openFaculty === 'commerce'}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <div x-show="openFaculty === 'commerce'" x-collapse class="p-4 border-t">
+                           <ul class="grid grid-cols-1 sm:grid-cols-2 gap-3 list-disc list-inside text-gray-600">
+                                <li>Business Administration</li>
+                                <li>Commerce</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="border rounded-lg">
+                        <button @click="openFaculty = openFaculty === 'education' ? '' : 'education'" class="w-full flex justify-between items-center p-4 bg-gray-50 hover:bg-gray-100 focus:outline-none">
+                            <span class="text-lg font-semibold text-gray-700">Faculty of Education</span>
+                            <svg class="w-6 h-6 transform transition-transform" :class="{'rotate-180': openFaculty === 'education'}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <div x-show="openFaculty === 'education'" x-collapse class="p-4 border-t">
+                            <ul class="grid grid-cols-1 sm:grid-cols-2 gap-3 list-disc list-inside text-gray-600">
+                                <li>Curriculum Development</li>
+                                <li>Educational Psychology</li>
+                                <li>Foundations & Management</li>
+                                <li>Science & Technical Education</li>
+                            </ul>
+                        </div>
+                    </div>
+                                    
+                    <div class="border rounded-lg">
+                        <button @click="openFaculty = openFaculty === 'law' ? '' : 'law'" class="w-full flex justify-between items-center p-4 bg-gray-50 hover:bg-gray-100 focus:outline-none">
+                            <span class="text-lg font-semibold text-gray-700">Faculty of Law</span>
+                            <svg class="w-6 h-6 transform transition-transform" :class="{'rotate-180': openFaculty === 'law'}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <div x-show="openFaculty === 'law'" x-collapse class="p-4 border-t">
+                            <ul class="list-disc list-inside text-gray-600">
+                                <li>School of Law</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="border rounded-lg">
+                        <button @click="openFaculty = openFaculty === 'pharmacy' ? '' : 'pharmacy'" class="w-full flex justify-between items-center p-4 bg-gray-50 hover:bg-gray-100 focus:outline-none">
+                            <span class="text-lg font-semibold text-gray-700">Faculty of Pharmacy</span>
+                            <svg class="w-6 h-6 transform transition-transform" :class="{'rotate-180': openFaculty === 'pharmacy'}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <div x-show="openFaculty === 'pharmacy'" x-collapse class="p-4 border-t">
+                            <ul class="grid grid-cols-1 sm:grid-cols-2 gap-3 list-disc list-inside text-gray-600">
+                                <li>Pharmaceutics</li>
+                                <li>Pharmacognosy</li>
+                                <li>Pharmacology</li>
+                                <li>Pharmaceutical Chemistry</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </main>
+
+      <footer class="bg-white border-t mt-auto">
+    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8 text-center text-gray-500">
+      <p class="mb-2 text-gray-700 font-medium">&copy; 2025 Muhammad Kaif | Developed with ❤️ and Dedication</p>
+      <p class="text-sm mb-4">IT Student | University of Sindh, Jamshoro | Web & App Developer</p>
+      <div class="flex items-center justify-center space-x-6 text-3xl">
+        <a href="mailto:muhammadkaifjokhio@gmail.com" class="text-red-500 hover:scale-110 transition" aria-label="Email"><i class="fas fa-envelope"></i></a>
+        <a href="https://wa.me/923001522770" target="_blank" class="text-green-500 hover:scale-110 transition" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+        <a href="https://www.linkedin.com/in/muhammadkaifjokhio" target="_blank" class="text-blue-600 hover:scale-110 transition" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+        <a href="https://www.instagram.com/kaify_alfayiz?igsh=NHFpcWN3MjEyMDZu" target="_blank" class="text-pink-500 hover:scale-110 transition" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+      </div>
+    </div>
+  </footer>
+    <script src="js/script.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/js/all.min.js"></script>
+</body>
+</html>
+
