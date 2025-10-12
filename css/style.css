@@ -1,0 +1,77 @@
+body {
+    font-family: 'Inter', sans-serif;
+    scroll-behavior: smooth
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, .4)
+}
+
+.badge {
+    display: inline-block;
+    padding: .25em .6em;
+    font-size: .85em;
+    font-weight: 600;
+    line-height: 1;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    border-radius: .375rem;
+    color: #fff
+}
+
+.badge-high {
+    background-color: #16a34a
+}
+
+.badge-good {
+    background-color: #ca8a04
+}
+
+.badge-possible {
+    background-color: #ea580c
+}
+
+.badge-low {
+    background-color: #dc2626
+}
+
+.mobile-menu {
+    display: none;
+    padding: .5rem 0
+}
+
+.mobile-menu a {
+    display: block;
+    padding: .75rem 1rem;
+    border-radius: .375rem;
+    font-weight: 500;
+    color: #374151
+}
+
+.mobile-menu a:hover {
+    background-color: #f3f4f6
+}
+
+.mobile-menu a.active {
+    background-color: #1d4ed8;
+    color: #fff
+}
+
+@media(max-width:768px) {
+    h1 {
+        font-size: 1.875rem;
+        line-height: 2.25rem
+    }
+
+    .main-card {
+        padding: 1.5rem
+    }
+
+    footer p {
+        font-size: .875rem
+    }
+}
