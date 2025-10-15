@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
 
-    /* ==== Responsive Navbar Toggle (hamburger ↔ cross) ==== */
+    /* ==== Responsive Navbar Toggle ==== */
     const menuToggle = document.getElementById('menu-toggle');
     const mobileMenu = document.getElementById('mobile-menu');
     const menuIcon = document.getElementById('menu-icon');
@@ -9,23 +9,13 @@ document.addEventListener('DOMContentLoaded', () => {
         menuToggle.addEventListener('click', () => {
             mobileMenu.classList.toggle('hidden');
             mobileMenu.classList.toggle('animate-slide-down');
-
-            // Toggle hamburger ↔ cross icon
-            if (!mobileMenu.classList.contains('hidden')) {
-                menuIcon.innerHTML = `
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M6 18L18 6M6 6l12 12"/>
-                `;
-            } else {
-                menuIcon.innerHTML = `
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M4 6h16M4 12h16m-7 6h7"/>
-                `;
-            }
+            menuIcon.innerHTML = !mobileMenu.classList.contains('hidden')
+                ? `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>`
+                : `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"/>`;
         });
     }
 
-    /* ==== CPN Calculator Logic ==== */
+    /* ==== Elements ==== */
     const calculateBtn = document.getElementById('calculate-btn');
     const suggestBtn = document.getElementById('suggest-btn');
     const cpnResultEl = document.getElementById('cpn-result');
@@ -33,65 +23,62 @@ document.addEventListener('DOMContentLoaded', () => {
     const resultsContainer = document.getElementById('results-container');
     const suggestionsOutputEl = document.getElementById('suggestions-output');
     const fieldSelectEl = document.getElementById('field-select');
+    const top5Btn = document.getElementById('top5-btn');
 
-    const departments = {
-        'pre-engineering': [
-            { name: "Software Engineering", minCPN: 78 },
-            { name: "Computer Science", minCPN: 75 },
-            { name: "Information Technology", minCPN: 74 },
-            { name: "Electronics", minCPN: 72 },
-            { name: "Telecommunication", minCPN: 70 },
-        ],
-        'pre-medical': [
-            { name: "Pharm-D", minCPN: 80 },
-            { name: "Chemistry", minCPN: 68 },
-            { name: "Zoology", minCPN: 68 },
-            { name: "Botany", minCPN: 65 },
-        ],
-        'common': [
-            { name: "Public Administration", minCPN: 63 },
-            { name: "English Literature", minCPN: 62 },
-            { name: "Economics", minCPN: 60 },
-            { name: "International Relations", minCPN: 58 },
-            { name: "Sociology", minCPN: 56 },
-            { name: "Sindhi", minCPN: 55 },
-        ]
-    };
+    /* ==== Department Lists ==== */
+    const itDepts = ['Information Technology', 'Computer Science', 'Data Science', 'Artificial Intelligence', 'AI'];
+    const engineeringDepts = ['Software Engineering', 'Physics', 'Mathematics'];
+    const medicalDepts = ['Pharmacy', 'Biochemistry', 'Microbiology', 'Physiology', 'Zoology', 'Botany', 'Biotechnology', 'Food Science'];
+    const commerceDepts = ['Commerce', 'BBA', 'Forensic Accounting', 'Banking & Finance', 'Accounting', 'Economics'];
+    const naturalScienceDepts = ['Chemistry', 'Geology', 'Statistics', 'Environmental Science'];
+    const artsDepts = ['English', 'History', 'Political Science', 'Sociology', 'Sindhi', 'Pakistani Studies', 'Philosophy', 'Psychology', 'International Relations', 'Education', 'Mass Communication'];
+    const veryHighCompetition = ['Pharmacy', 'Law'];
+
+    const generalDepts = [
+        ...itDepts,
+        ...commerceDepts,
+        'Public Administration',
+        'Education',
+        'Mass Communication'
+    ];
+
+    const preMedicalAllowed = [
+        ...medicalDepts,
+        ...generalDepts,
+        'Chemistry', 'Environmental Science', 'Psychology', 'Sociology', 'English', 'History', 'Economics'
+    ].filter((v, i, a) => a.indexOf(v) === i);
+
+    const engineeringAllowed = [
+        ...engineeringDepts,
+        ...generalDepts,
+        'Chemistry', 'Geology', 'Statistics', 'Environmental Science'
+    ].filter((v, i, a) => a.indexOf(v) === i);
 
     /* ==== Event Listeners ==== */
     calculateBtn.addEventListener('click', calculateCPN);
     suggestBtn.addEventListener('click', showSuggestions);
+    if (top5Btn) top5Btn.addEventListener('click', showTop10Picks);
 
     /* ==== Calculate CPN ==== */
     function calculateCPN() {
         resetUI();
-
         const matricPerc = parseFloat(document.getElementById('matric-percentage').value);
         const interPerc = parseFloat(document.getElementById('inter-percentage').value);
         const testScore = parseFloat(document.getElementById('test-score').value);
 
         if (!validateInputs(matricPerc, interPerc, testScore)) return;
 
-        // Weighted CPN calculation
         const cpn = (testScore * 0.6) + (interPerc * 0.3) + (matricPerc * 0.1);
         displayResult(cpn);
     }
 
-    /* ==== Input Validation ==== */
     function validateInputs(matric, inter, test) {
-        if (isNaN(matric) || isNaN(inter) || isNaN(test)) {
-            return showError("Please fill in all fields with numbers.");
-        }
-        if (matric < 0 || matric > 100 || inter < 0 || inter > 100) {
-            return showError("Percentages must be between 0 and 100.");
-        }
-        if (test < 0 || test > 100) {
-            return showError("Test score must be between 0 and 100.");
-        }
+        if (isNaN(matric) || isNaN(inter) || isNaN(test)) return showError("Please fill in all fields with numbers.");
+        if (matric < 0 || matric > 100 || inter < 0 || inter > 100) return showError("Percentages must be between 0 and 100.");
+        if (test < 0 || test > 100) return showError("Test score must be between 0 and 100.");
         return true;
     }
 
-    /* ==== Display CPN Result ==== */
     function displayResult(cpn) {
         cpnResultEl.textContent = cpn.toFixed(2);
         resultsContainer.classList.remove('hidden');
@@ -100,50 +87,151 @@ document.addEventListener('DOMContentLoaded', () => {
     /* ==== Show Department Suggestions ==== */
     function showSuggestions() {
         const cpn = parseFloat(cpnResultEl.textContent);
-        if (isNaN(cpn)) return;
+        if (isNaN(cpn)) return showError("Calculate your CPN first.");
 
-        const selectedField = fieldSelectEl.value;
-        const fieldDepartments = departments[selectedField] || [];
-        const commonDepartments = departments['common'] || [];
-        let allDepartments = [...fieldDepartments, ...commonDepartments];
+        const field = (fieldSelectEl && fieldSelectEl.value) ? fieldSelectEl.value : 'pre-engineering';
+        let available = [];
 
-        // Add probability info
-        allDepartments = allDepartments.map(dept => ({ ...dept, ...getProbability(cpn, dept.minCPN) }));
+        if (field === 'pre-medical' || field === 'premedical') {
+            available = preMedicalAllowed;
+        } else if (field === 'pre-engineering' || field === 'engineering') {
+            available = engineeringAllowed;
+        } else {
+            available = generalDepts.concat(artsDepts);
+        }
 
-        // Sort by probability (high → low)
-        allDepartments.sort((a, b) => b.score - a.score || b.minCPN - a.minCPN);
+        itDepts.forEach(d => { if (!available.includes(d)) available.push(d); });
 
-        // Render suggestions
-        let outputHTML = `
-            <h3 class="text-2xl font-bold text-gray-800 text-center mb-6">
-                Department Suggestions (Highest Chance First)
-            </h3>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        `;
-        allDepartments.forEach(dept => {
-            outputHTML += `
-                <div class="bg-white border rounded-lg p-4 flex justify-between items-center shadow-sm hover:shadow-md transition-shadow">
-                    <span class="font-semibold text-gray-700">${dept.name}</span>
-                    <span class="badge ${dept.class}">${dept.text}</span>
-                </div>
-            `;
+        let suggestions = available.map(name => {
+            const prob = evaluateChanceForDept(name, cpn);
+            return { name, ...prob };
         });
-        outputHTML += `</div>`;
 
-        suggestionsOutputEl.innerHTML = outputHTML;
+        suggestions.sort((a, b) => {
+            const scoreA = scoreValue(a.text), scoreB = scoreValue(b.text);
+            if (scoreB !== scoreA) return scoreB - scoreA;
+            const boostA = itDepts.includes(a.name) ? 0.1 : 0;
+            const boostB = itDepts.includes(b.name) ? 0.1 : 0;
+            if (boostB !== boostA) return boostB - boostA;
+            return a.name.localeCompare(b.name);
+        });
+
+        // ✅ Working Renderer
+        renderSuggestionsList(
+            suggestions,
+            `Department Suggestions — ${field === 'pre-medical' ? 'Pre-Medical' : field === 'pre-engineering' ? 'Pre-Engineering' : 'General'}`
+        );
+    }
+
+    /* ==== Renderer (Fixed) ==== */
+    function renderSuggestionsList(list, heading) {
         suggestionsOutputEl.classList.remove('hidden');
+        suggestionsOutputEl.innerHTML = `
+            <div class="bg-blue-50 border-2 border-blue-300 rounded-xl p-6 shadow-md animate-fade-in">
+              <h3 class="text-2xl font-semibold text-blue-700 mb-4">${heading}</h3>
+              <ul class="text-left max-w-md mx-auto list-disc list-inside text-gray-700 space-y-2">
+                ${list.map(item =>
+                    `<li><span class="font-medium">${item.name}</span> 
+                    <span class="badge ${item.class}">${item.text}</span></li>`
+                ).join('')}
+              </ul>
+            </div>
+        `;
     }
 
-    /* ==== Probability Calculation ==== */
-    function getProbability(userCPN, minCPN) {
-        const diff = userCPN - minCPN;
-        if (diff >= 5) return { text: "High", class: "badge-high", score: 4 };
-        if (diff >= 2) return { text: "Good", class: "badge-good", score: 3 };
-        if (diff >= -2) return { text: "Possible", class: "badge-possible", score: 2 };
-        return { text: "Low", class: "badge-low", score: 1 };
+    /* ==== Chance Logic ==== */
+    function evaluateChanceForDept(deptName, cpn) {
+        if (veryHighCompetition.includes(deptName)) {
+            if (cpn >= 75) return { text: 'High', class: 'badge-high' };
+            if (cpn >= 68) return { text: 'Good', class: 'badge-good' };
+            if (cpn >= 60) return { text: 'Possible', class: 'badge-possible' };
+            return { text: 'Low', class: 'badge-low' };
+        }
+
+        if (artsDepts.includes(deptName) || ['Chemistry', 'Geology', 'Environmental Science', 'Food Science'].includes(deptName)) {
+            if (cpn >= 55) return { text: 'High', class: 'badge-high' };
+            if (cpn >= 50) return { text: 'Good', class: 'badge-good' };
+            if (cpn >= 45) return { text: 'Possible', class: 'badge-possible' };
+            return { text: 'Low', class: 'badge-low' };
+        }
+
+        if (itDepts.includes(deptName) || commerceDepts.includes(deptName)) {
+            if (cpn >= 70) return { text: 'High', class: 'badge-high' };
+            if (cpn >= 62) return { text: 'Good', class: 'badge-good' };
+            if (cpn >= 55) return { text: 'Possible', class: 'badge-possible' };
+            return { text: 'Low', class: 'badge-low' };
+        }
+
+        if (engineeringDepts.includes(deptName) || deptName.toLowerCase().includes('engineering')) {
+            if (cpn >= 70) return { text: 'High', class: 'badge-high' };
+            if (cpn >= 63) return { text: 'Good', class: 'badge-good' };
+            if (cpn >= 58) return { text: 'Possible', class: 'badge-possible' };
+            return { text: 'Low', class: 'badge-low' };
+        }
+
+        if (medicalDepts.includes(deptName)) {
+            if (cpn >= 68) return { text: 'High', class: 'badge-high' };
+            if (cpn >= 60) return { text: 'Good', class: 'badge-good' };
+            if (cpn >= 55) return { text: 'Possible', class: 'badge-possible' };
+            return { text: 'Low', class: 'badge-low' };
+        }
+
+        if (cpn >= 70) return { text: 'High', class: 'badge-high' };
+        if (cpn >= 60) return { text: 'Good', class: 'badge-good' };
+        if (cpn >= 55) return { text: 'Possible', class: 'badge-possible' };
+        return { text: 'Low', class: 'badge-low' };
     }
 
-    /* ==== Reset UI ==== */
+    function scoreValue(label) {
+        switch (label) {
+            case 'High': return 4;
+            case 'Good': return 3;
+            case 'Possible': return 2;
+            default: return 1;
+        }
+    }
+
+    /* ==== Top 10 Picks ==== */
+    function showTop10Picks() {
+        const cpnValue = parseFloat(cpnResultEl.textContent);
+        if (isNaN(cpnValue)) return showError("Calculate your CPN first.");
+
+        const field = (fieldSelectEl && fieldSelectEl.value) ? fieldSelectEl.value : 'pre-engineering';
+        let available = [];
+
+        if (field === 'pre-medical' || field === 'premedical') available = preMedicalAllowed;
+        else if (field === 'pre-engineering' || field === 'engineering') available = engineeringAllowed;
+        else available = generalDepts.concat(artsDepts);
+
+        itDepts.forEach(d => { if (!available.includes(d)) available.push(d); });
+
+        const scored = available.map(name => {
+            const prob = evaluateChanceForDept(name, cpnValue);
+            return { name, text: prob.text, class: prob.class, score: scoreValue(prob.text) };
+        });
+
+        scored.sort((a, b) => {
+            if (b.score !== a.score) return b.score - a.score;
+            const priorityA = (itDepts.includes(a.name) || commerceDepts.includes(a.name) || engineeringDepts.includes(a.name)) ? 1 : 0;
+            const priorityB = (itDepts.includes(b.name) || commerceDepts.includes(b.name) || engineeringDepts.includes(b.name)) ? 1 : 0;
+            if (priorityB !== priorityA) return priorityB - priorityA;
+            return a.name.localeCompare(b.name);
+        });
+
+        const top10 = scored.slice(0, 10);
+
+        suggestionsOutputEl.classList.remove('hidden');
+        suggestionsOutputEl.innerHTML = `
+            <div class="bg-blue-50 border-2 border-blue-300 rounded-xl p-6 shadow-md animate-fade-in">
+              <h3 class="text-2xl font-semibold text-blue-700 mb-4">Top 10 Best Picks (Field: ${field}) — CPN ${cpnValue.toFixed(2)}</h3>
+              <ul class="list-decimal list-inside text-gray-700 space-y-2">
+                ${top10.map(item => `<li>${item.name} <span class="text-sm text-gray-500">(${item.text})</span></li>`).join('')}
+              </ul>
+            </div>
+        `;
+    }
+
+    /* ==== UI Helpers ==== */
     function resetUI() {
         errorMessageEl.classList.add('hidden');
         resultsContainer.classList.add('hidden');
@@ -151,11 +239,9 @@ document.addEventListener('DOMContentLoaded', () => {
         suggestionsOutputEl.innerHTML = '';
     }
 
-    /* ==== Show Error ==== */
     function showError(message) {
         errorMessageEl.textContent = message;
         errorMessageEl.classList.remove('hidden');
         return false;
     }
-
 });
